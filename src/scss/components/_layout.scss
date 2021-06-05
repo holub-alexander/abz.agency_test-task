@@ -1,0 +1,13 @@
+.main {
+  grid-area: main;
+}
+
+.page {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  grid-template-rows: 60px 1fr 57px;
+  min-height: 100vh;
+}

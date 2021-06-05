@@ -21,3 +21,13 @@
     url('../assets/fonts/Nunito-Bold.woff2') format('woff2'),
     url('../assets/fonts/Nunito-Bold.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'Asap';
+  src: local('Asap Regular'), local('Asap-Regular'),
+    url('../assets/fonts/Asap-Regular.woff2') format('woff2'),
+    url('../assets/fonts/Asap-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

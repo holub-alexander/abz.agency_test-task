@@ -1,0 +1,15 @@
+.header {
+  grid-area: header;
+
+  &--bg {
+    background-color: $bg-color-light-xl;
+    filter: drop-shadow(-1px -1px 5px rgba(0, 0, 0, 0.15));
+  }
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 0;
+}
