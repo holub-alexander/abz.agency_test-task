@@ -9,7 +9,22 @@
 }
 
 .our-users__cards {
+  position: relative;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+  margin-bottom: 52px;
+
+  &.our-users__cards--big {
+    min-height: 999px;
+  }
+}
+
+.our-users__btn {
+  text-align: center;
+
+  button {
+    padding: 12px 33px;
+  }
 }

@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ children, type, link = '', className = '' } = {}) => {
+const Button = props => {
   // TODO: Реализовать плавный переход к якорю
+  const {
+    children,
+    type,
+    link = '',
+    className = '',
+    clickHandler = null,
+  } = props;
 
   return (
     <>
@@ -12,6 +19,7 @@ const Button = ({ children, type, link = '', className = '' } = {}) => {
           className={`${
             type === 'yellow' ? 'button button--yelow' : 'button'
           } ${className}`}
+          onClick={clickHandler}
         >
           {children}
         </button>
@@ -34,6 +42,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(['yellow']).isRequired,
   link: PropTypes.string,
   className: PropTypes.string,
+  clickHandler: PropTypes.func,
 };
 
 export default Button;

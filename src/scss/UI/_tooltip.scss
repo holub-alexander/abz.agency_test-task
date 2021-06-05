@@ -8,7 +8,8 @@
 
   background-color: #232f34 !important;
 
-  &::before {
+  &::before,
+  &::after {
     display: none;
   }
 }

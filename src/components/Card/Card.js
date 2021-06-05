@@ -15,7 +15,7 @@ const Card = ({ type, photo, name, position, email, phone }) => {
           {!photo ? (
             <img src={photoCover} alt="Avatar" className="card__avatar" />
           ) : (
-            <Image img={photo} />
+            <Image image={photo} />
           )}
 
           {name.length > 45 ? (

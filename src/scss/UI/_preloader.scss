@@ -1,0 +1,25 @@
+.preloader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 48px;
+  height: 48px;
+
+  background-image: url('../../assets/icons/preloader.svg');
+  background-size: 48px 48px;
+
+  transform: translate(-50%, -50%);
+
+  animation: 1.3s linear 0s infinite preloader;
+}
+
+@keyframes preloader {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

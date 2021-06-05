@@ -2,13 +2,14 @@
   max-width: 370px;
   min-height: 313px;
   padding: 39px 30px 28px;
+  overflow: hidden;
 
   text-align: center;
 
   background-color: $bg-color-light-xl;
 
   a {
-    display: inline-block;
+    display: block;
 
     color: rgba(0, 0, 0, 0.85);
     font-weight: 400;
@@ -30,8 +31,14 @@
 
 .card__name {
   margin: 0 0 3px;
+  overflow: hidden;
 }
 
 .card__prof {
   margin: 0 0 0;
+  overflow: hidden;
+}
+
+.card__email {
+  overflow: hidden;
 }
