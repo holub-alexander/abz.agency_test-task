@@ -13,7 +13,6 @@ const BG = ({ color, children }) => {
 
 BG.propTypes = {
   color: PropTypes.oneOf(['yellow', 'blue', 'light-gray']).isRequired,
-  children: PropTypes.object,
 };
 
 export default BG;

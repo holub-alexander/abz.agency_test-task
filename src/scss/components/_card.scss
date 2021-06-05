@@ -1,0 +1,37 @@
+.card {
+  max-width: 370px;
+  min-height: 313px;
+  padding: 39px 30px 28px;
+
+  text-align: center;
+
+  background-color: $bg-color-light-xl;
+
+  a {
+    display: inline-block;
+
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 400;
+    font-size: 1.6rem;
+    font-family: 'Nunito', sans-serif;
+    line-height: 26px;
+    text-decoration: none;
+  }
+}
+
+.card__avatar {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 16px;
+  overflow: hidden;
+
+  border-radius: 50%;
+}
+
+.card__name {
+  margin: 0 0 3px;
+}
+
+.card__prof {
+  margin: 0 0 0;
+}

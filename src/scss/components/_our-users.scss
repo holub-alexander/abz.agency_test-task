@@ -1,0 +1,15 @@
+.our-users__head {
+  margin-bottom: 30px;
+
+  text-align: center;
+}
+
+.our-users__title {
+  margin-bottom: 11px;
+}
+
+.our-users__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}

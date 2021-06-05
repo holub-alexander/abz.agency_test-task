@@ -1,0 +1,14 @@
+.tooltip {
+  padding: 2px 16px !important;
+
+  color: #fff !important;
+  font-size: 1.6rem !important;
+  font-family: 'Nunito', sans-serif !important;
+  line-height: 1.625em !important;
+
+  background-color: #232f34 !important;
+
+  &::before {
+    display: none;
+  }
+}
