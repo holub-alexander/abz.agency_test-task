@@ -1,0 +1,13 @@
+.bg {
+  &.bg--yellow {
+    background-color: $primary;
+  }
+
+  &.bg--blue {
+    background-color: $secondary;
+  }
+
+  &.bg--light-gray {
+    background-color: $bg-color-light-x;
+  }
+}
