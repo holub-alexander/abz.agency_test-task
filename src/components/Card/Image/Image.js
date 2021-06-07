@@ -1,25 +1,20 @@
 import React from 'react';
-import axios from './../../../axios/axiosConfig';
+import PropTypes from 'prop-types';
 
 import photoCover from '../../../assets/icons/Photo-cover.svg';
 
 const Image = ({ image }) => {
-  const [avatar, setAvatar] = React.useState(
-    <img src={photoCover} alt="Avatar" className="card__avatar" />
-  );
-  console.log(avatar);
-  React.useEffect(() => {
-    axios
-      .get(`${image}`)
-      .then(() =>
-        setAvatar(<img src={image} alt="Avatar" className="card__avatar" />)
-      )
-      .catch(err => {
-        console.log(err);
-      });
-  }, [image]);
+  const onErrorSrc = e => {
+    e.target.src = photoCover;
+  };
 
-  return avatar;
+  return (
+    <img className="card__avatar" src={image} onError={onErrorSrc} alt="" />
+  );
+};
+
+Image.propTypes = {
+  image: PropTypes.string,
 };
 
 export default Image;

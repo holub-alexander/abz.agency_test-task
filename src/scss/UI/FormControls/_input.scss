@@ -1,0 +1,131 @@
+.input-control {
+  position: relative;
+
+  display: block;
+  margin-top: -20px;
+  padding-top: 20px;
+
+  input {
+    width: 100%;
+    height: 54px;
+    padding: 6px 15px;
+
+    font-size: $font-size-default;
+    font-family: $accent-font;
+    line-height: 1.6em;
+
+    background-color: $bg-color-light-xl;
+    border: 1px solid #d0cfcf;
+    border-radius: 4px;
+    outline: none;
+
+    transition: all 300ms;
+
+    &:focus {
+      border: 2px solid $secondary;
+    }
+
+    &::placeholder {
+      font-size: 1.6rem;
+      font-family: $main-font;
+      line-height: 1.625em;
+    }
+
+    &:disabled {
+      color: #bcbcbc;
+
+      border: 1px solid #bcbcbc;
+    }
+  }
+
+  // TODO: Пройтись по свойствам fs, ff и заненить их на перем.
+
+  .input-control__text {
+    position: absolute;
+
+    display: block;
+    padding: 0 15.6px;
+
+    color: #c3c3c3;
+    font-size: $font-size-default;
+    font-family: $accent-font;
+    line-height: 1.6em;
+    text-align: left;
+
+    transform: translateY(-39px);
+    opacity: 0;
+
+    transition: all 300ms;
+
+    pointer-events: none;
+  }
+
+  .input-control__helper {
+    position: absolute;
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 4px 0 0;
+    padding: 0 16px;
+
+    color: $color-dark-xl;
+    font-size: 1.2rem;
+    font-family: $accent-font;
+    line-height: 1.4em;
+
+    opacity: 0;
+
+    transition: all 250ms;
+
+    pointer-events: none;
+  }
+
+  input:focus + .input-control__text {
+    display: table;
+    margin-left: 11px;
+    padding: 0 5.6px;
+
+    color: $secondary;
+    font-size: 1.2rem;
+    font-family: $accent-font;
+    line-height: 1.4em;
+
+    background-color: $bg-color-light-xl;
+
+    transform: translateY(-65px);
+    opacity: 1;
+  }
+
+  input:valid:not(:placeholder-shown) + .input-control__text {
+    display: table;
+    margin-left: 11px;
+    padding: 0 5.6px;
+
+    color: $secondary;
+    font-size: 1.2rem;
+    font-family: $accent-font;
+    line-height: 1.4em;
+
+    background-color: $bg-color-light-xl;
+
+    transform: translateY(-65px);
+    opacity: 1;
+  }
+
+  input:valid:not(:focus) + .input-control__text {
+    color: #7e7e7e;
+  }
+
+  input:focus ~ .input-control__helper {
+    opacity: 1;
+  }
+
+  &.error input {
+    border: 2px solid $error;
+  }
+
+  &.error span.input-control__text {
+    color: $error !important;
+  }
+}

@@ -1,5 +1,24 @@
 .footer {
   grid-area: footer;
 
-  background-color: pink;
+  margin-top: 2px;
+  padding-top: 177px;
+
+  background-color: $bg-color-light-x;
+  background-image: url('../../assets/icons/foot.svg');
+  background-repeat: no-repeat;
+  background-position: top -21px right 17px;
+  background-size: 831.8px 234px;
+}
+
+.footer__content {
+  padding: 16px 0;
+
+  background-color: $bg-color-light-xl;
+}
+
+.copyright {
+  display: block;
+
+  text-align: center;
 }

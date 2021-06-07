@@ -9,17 +9,20 @@ const Button = props => {
     link = '',
     className = '',
     clickHandler = null,
+    isDisabled = false,
+    isSubmit = false,
   } = props;
 
   return (
     <>
       {link === '' ? (
         <button
-          type="button"
+          type={isSubmit ? 'submit' : 'button'}
           className={`${
             type === 'yellow' ? 'button button--yelow' : 'button'
           } ${className}`}
           onClick={clickHandler}
+          disabled={isDisabled}
         >
           {children}
         </button>
@@ -43,6 +46,8 @@ Button.propTypes = {
   link: PropTypes.string,
   className: PropTypes.string,
   clickHandler: PropTypes.func,
+  isDisabled: PropTypes.bool,
+  isSubmit: PropTypes.bool,
 };
 
 export default Button;

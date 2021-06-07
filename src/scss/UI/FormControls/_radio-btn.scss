@@ -1,0 +1,54 @@
+.radio-btn {
+  display: block;
+
+  color: $color-dark-xl;
+  font-size: 1.6rem;
+  font-family: $main-font;
+  line-height: 1.625em;
+}
+
+.radio-btn > input {
+  position: absolute;
+  z-index: -1;
+
+  opacity: 0;
+}
+
+.radio-btn > span {
+  display: inline-flex;
+  align-items: center;
+
+  user-select: none;
+
+  &::before {
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    border: 1px solid #d0cfcf;
+    border-radius: 50%;
+
+    content: '';
+  }
+}
+
+.radio-btn > input:checked + span::before {
+  background-color: $bg-color-light-xl;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 10 10'%3e%3ccircle r='5' fill='%2300bdd3'/%3e%3c/svg%3e");
+  border-color: $secondary;
+}
+
+.radio-btn > input:not(:disabled):active + span::before {
+  background-color: $bg-color-light-xl;
+  border-color: lighten($secondary, 10%);
+}
+
+.radio-btn > input:not(:disabled):not(:checked) + span:hover::before {
+  border-color: lighten($secondary, 10%);
+}

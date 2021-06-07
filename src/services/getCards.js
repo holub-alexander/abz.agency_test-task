@@ -19,7 +19,6 @@ const getCards = async (page = 1, count = 9) => {
       throw new ValidationError(null, errors);
 
     const response = await axios.get(`users?page=${page}&count=${count}`);
-    console.log(response);
 
     return {
       response,

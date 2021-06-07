@@ -16,6 +16,13 @@
     color: #fff;
 
     background-color: $btn-disabled;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+
+      background-color: $btn-disabled;
+    }
   }
 
   &:hover {

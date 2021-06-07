@@ -9,6 +9,7 @@ import heroBgWebp from '../assets/img/hero/Banner_photo.jpg';
 import heroBgJpeg from '../assets/img/hero/Banner_photo.jpg';
 import infoBlockImg from '../assets/icons/InfoBlock.svg';
 import BG from './../components/UI/BG/BG';
+import SignUpForm from '../components/SignUpForm/SignUpForm';
 
 const IndexPage = () => {
   return (
@@ -43,6 +44,13 @@ const IndexPage = () => {
             />
           </div>
         </section>
+
+        <div className="register-form">
+          <SignUpForm
+            title="Register to get a work"
+            descr="Your personal data is stored according to the Privacy Policy"
+          />
+        </div>
       </BG>
     </>
   );

@@ -1,3 +1,7 @@
+.our-users {
+  margin-bottom: 175px;
+}
+
 .our-users__head {
   margin-bottom: 30px;
 
@@ -12,6 +16,7 @@
   position: relative;
 
   display: grid;
+  grid-template-rows: repeat(3, 313px);
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-bottom: 52px;
