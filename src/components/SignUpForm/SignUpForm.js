@@ -6,6 +6,7 @@ import Heading from '../UI/Typography/Heading';
 import Button from './../UI/Button/Button';
 import Font from './../UI/Typography/Font';
 import SelectPos from '../SelectPos/SelectPos';
+import { useDispatch } from 'react-redux';
 
 import {
   checkValueLength,
@@ -13,6 +14,7 @@ import {
   validationPhone,
 } from './validationForm';
 import FileUpload from '../UI/FileUpload/FileUpload';
+import { sendUser } from '../../redux/actions/sendUser';
 
 const SignUpForm = ({ title, descr }) => {
   const [isFormValid, setIsFormValid] = React.useState(false);
@@ -26,6 +28,8 @@ const SignUpForm = ({ title, descr }) => {
   const [radioChecked, setRadioChecked] = React.useState(1);
   const [file, setFile] = React.useState('');
 
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
     if (isValidName && isValidEmail && isValidPhone && isValidFile) {
       setIsFormValid(true);
@@ -36,6 +40,10 @@ const SignUpForm = ({ title, descr }) => {
 
   const formSubmitHandler = event => {
     event.preventDefault();
+
+    if (isFormValid) {
+      dispatch(sendUser({ name, email, phone, radioChecked, file }));
+    }
   };
 
   const validationInput = (nameInput, value, minLength, maxLength) => {

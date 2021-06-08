@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 
 import Radio from '../UI/Radio/Radio';
 import Font from './../UI/Typography/Font';
-import getPositions from '../../services/getPositions';
 import Preloader from './../UI/Preloader/Preloader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPositions } from '../../redux/actions/positions';
 
 const SelectPos = ({ title, setRadioChecked }) => {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [positions, setPositions] = React.useState(null);
+  const [positionsBlock, setPositionsBlock] = React.useState(null);
+
+  const positions = useSelector(state => state.positionsReducer);
+  const dispatch = useDispatch();
 
   const createPositions = positionsData => {
     return positionsData.map((position, index) => (
@@ -25,13 +28,12 @@ const SelectPos = ({ title, setRadioChecked }) => {
   };
 
   React.useEffect(() => {
-    getPositions()
-      .then(res => {
-        setIsLoading(false);
-        setPositions(createPositions(res.data.positions));
-      })
-      .catch(err => console.log(err));
-  }, []);
+    dispatch(fetchPositions());
+
+    if (!positions.loading) {
+      setPositionsBlock(createPositions(positions.results.positions));
+    }
+  }, [positions.loading]);
 
   return (
     <div className="select-pos">
@@ -40,7 +42,7 @@ const SelectPos = ({ title, setRadioChecked }) => {
       </Font>
 
       <div className="select-pos__radio">
-        {isLoading ? <Preloader /> : positions}
+        {positions.loading ? <Preloader /> : positionsBlock}
       </div>
     </div>
   );

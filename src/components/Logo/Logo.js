@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/icons/logo.svg';
 
-const Logo = ({ width, height }) => {
+const Logo = ({ width = 104, height = 26 }) => {
   return (
     <div className="logo">
       <Link to="/">
@@ -17,11 +17,6 @@ const Logo = ({ width, height }) => {
 Logo.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
-};
-
-Logo.defaultProps = {
-  width: 104,
-  height: 26,
 };
 
 export default Logo;

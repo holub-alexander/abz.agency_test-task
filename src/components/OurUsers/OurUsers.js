@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Heading from '../UI/Typography/Heading';
 import Card from '../Card/Card';
@@ -30,12 +31,14 @@ const buildCards = response => {
 const OurUsers = ({ title, descr }) => {
   const [isLoading, setLoading] = React.useState(true);
   const [cards, setCards] = React.useState(null);
-  const [pageNum, setPageNum] = React.useState(1);
+  const [pageNum, setPageNum] = React.useState(2);
   const [totalPages, setTotalPages] = React.useState(1);
   const windowSize = useWindowSize();
   const [typeBlockCards, setTypeBlockCards] = React.useState([
     'our-users__cards',
   ]);
+
+  const sendUserData = useSelector(state => state.sendUserReducer);
 
   React.useEffect(() => {
     let countCards = 9;
@@ -47,15 +50,15 @@ const OurUsers = ({ title, descr }) => {
     if (countCards === 6) setTypeBlockCards('our-users__cards--medium');
     if (countCards === 3) setTypeBlockCards('our-users__cards--small');
 
-    getCards(pageNum, countCards)
+    getCards(1, countCards)
       .then(res => {
         setLoading(res.loading);
-        setPageNum(2);
+        setPageNum(1);
         setTotalPages(res.response.data.total_pages);
         setCards(buildCards(res.response));
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [sendUserData]);
 
   const showMoreClickHanlder = () => {
     let countCards = 9;
@@ -65,7 +68,7 @@ const OurUsers = ({ title, descr }) => {
 
     setLoading(true);
 
-    getCards(pageNum, countCards)
+    getCards(pageNum + 1, countCards)
       .then(res => {
         setLoading(res.loading);
         setPageNum(pageNum + 1);

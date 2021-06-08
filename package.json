@@ -20,6 +20,7 @@
     "react-svg": "^13.0.6",
     "react-tooltip": "^4.2.21",
     "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
     "stylelint": "^13.13.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^22.0.0",
