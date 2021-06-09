@@ -17,6 +17,7 @@ const List = ({ listItems, opt }) => {
           link={item.to}
           key={uuidv4()}
           mobile={item.mobile}
+          id={item.id}
         />
       ))}
     </ul>

@@ -65,14 +65,12 @@ const SignUpForm = ({ title, descr }) => {
       setIsValidPhone(isValid);
     }
 
-    console.log(isValid);
-
     return isValid;
   };
 
   return (
     <div className="container">
-      <div className="sign-up">
+      <div className="sign-up" id="sign-up">
         <div className="sign-up__head">
           <Heading tag="h1" type="normal" className="sign-up__title">
             {title}

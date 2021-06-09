@@ -58,7 +58,7 @@ const OurUsers = ({ title, descr }) => {
         setCards(buildCards(res.response));
       })
       .catch(err => console.log(err));
-  }, [sendUserData]);
+  }, [sendUserData, windowSize.width]);
 
   const showMoreClickHanlder = () => {
     let countCards = 9;

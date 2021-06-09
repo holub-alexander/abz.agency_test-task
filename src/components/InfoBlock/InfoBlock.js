@@ -24,7 +24,7 @@ const InfoBlock = props => {
         <Font type="normal" className="info-block__text">
           {text}
         </Font>
-        <Button type="yellow" className="info-block__btn">
+        <Button type="yellow" className="info-block__btn" link="sign-up">
           <Font type="normal">{btnText}</Font>
         </Button>
       </div>

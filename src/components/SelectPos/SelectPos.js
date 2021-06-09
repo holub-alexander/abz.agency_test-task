@@ -33,6 +33,7 @@ const SelectPos = ({ title, setRadioChecked }) => {
     if (!positions.loading) {
       setPositionsBlock(createPositions(positions.results.positions));
     }
+    // eslint-disable-next-line
   }, [positions.loading]);
 
   return (

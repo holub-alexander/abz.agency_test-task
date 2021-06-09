@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-scroll';
 
 const Button = props => {
-  // TODO: Реализовать плавный переход к якорю
   const {
     children,
     type,
@@ -27,14 +27,19 @@ const Button = props => {
           {children}
         </button>
       ) : (
-        <a
-          href={link}
+        <Link
+          activeClass="active"
+          to={link}
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
           className={`${
             type === 'yellow' ? 'button button--yelow' : 'button'
           } ${className}`}
         >
           {children}
-        </a>
+        </Link>
       )}
     </>
   );

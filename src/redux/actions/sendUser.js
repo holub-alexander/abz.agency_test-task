@@ -46,7 +46,6 @@ export const sendUser = ({ name, email, phone, radioChecked: radio, file }) => {
       formData.append('phone', phone);
       formData.append('position_id', radio);
       formData.append('photo', file);
-      console.log(file);
 
       const token = await getToken();
 

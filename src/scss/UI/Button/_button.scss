@@ -1,6 +1,7 @@
 .button {
   position: relative;
 
+  display: inline-flex;
   height: 50px;
   padding: 12px 47px;
   overflow: hidden;
@@ -9,8 +10,13 @@
 
   background: $primary;
   border-radius: 80px;
+  cursor: pointer;
 
   transition: all 250ms;
+
+  &:hover {
+    background-color: #ffe302;
+  }
 
   &:disabled {
     color: #fff;
@@ -23,10 +29,6 @@
 
       background-color: $btn-disabled;
     }
-  }
-
-  &:hover {
-    background-color: #ffe302;
   }
 
   &::before,

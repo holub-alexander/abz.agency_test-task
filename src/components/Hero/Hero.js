@@ -44,7 +44,7 @@ const Hero = ({ images, title, text, btnText = '' }) => {
             {sizes.width <= 560 ? text.slice(0, 113) : text}
           </Font>
           {btnText !== '' ? (
-            <Button type="yellow">
+            <Button type="yellow" link="sign-up">
               <Font type="normal">{btnText}</Font>
             </Button>
           ) : null}

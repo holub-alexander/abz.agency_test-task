@@ -32,6 +32,7 @@ const routes = [
     title: 'Sign Up',
     to: '/signup',
     mobile: false,
+    id: 'sign-up',
   },
   {
     title: 'How it works',
