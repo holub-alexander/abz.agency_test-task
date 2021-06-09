@@ -33,3 +33,32 @@
     padding: 12px 33px;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .our-users__cards {
+    grid-auto-rows: 313px;
+    grid-template-rows: repeat(2, 313px);
+    margin-bottom: 49px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .our-users__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 47px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .our-users {
+    margin-bottom: 145px;
+  }
+
+  .our-users__cards {
+    grid-template-rows: repeat(3, 314px);
+    grid-template-columns: 1fr;
+    gap: 23px;
+    margin-bottom: 51px;
+  }
+}

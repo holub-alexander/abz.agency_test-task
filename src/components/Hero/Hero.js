@@ -5,13 +5,20 @@ import PropTypes from 'prop-types';
 import Heading from './../UI/Typography/Heading';
 import Font from './../UI/Typography/Font';
 import Button from './../UI/Button/Button';
+import useWindowSize from './../../hooks/useWindowSize';
 
 const Hero = ({ images, title, text, btnText = '' }) => {
+  const sizes = useWindowSize();
+
   return (
     <div className="hero">
       <div className="hero__img">
         <Picture
           sources={[
+            {
+              srcSet: `${images.mobile560}, ${images.mobile2x560} 2x`,
+              media: '(max-width: 560px)',
+            },
             {
               srcSet: `${images.avif}`,
               type: 'image/avif',
@@ -34,7 +41,7 @@ const Hero = ({ images, title, text, btnText = '' }) => {
             {title}
           </Heading>
           <Font type="normal" className="hero__info-text">
-            {text}
+            {sizes.width <= 560 ? text.slice(0, 113) : text}
           </Font>
           {btnText !== '' ? (
             <Button type="yellow">

@@ -42,3 +42,23 @@
 .card__email {
   overflow: hidden;
 }
+
+@media screen and (max-width: 1024px) {
+  .card {
+    padding: 35px 30px 28px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 37px 30px 28px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .card {
+    width: 100%;
+    max-width: none;
+    padding-top: 37px;
+  }
+}

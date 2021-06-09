@@ -22,3 +22,23 @@
 
   text-align: center;
 }
+
+@media screen and (max-width: 1024px) {
+  .footer {
+    background-position: top -6px right -364px;
+    background-size: 831.8px 210px;
+  }
+
+  .footer__content {
+    padding: 18px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .footer {
+    padding-top: 148px;
+
+    background-position: top 38px right -281px;
+    background-size: 665.8px 110px;
+  }
+}

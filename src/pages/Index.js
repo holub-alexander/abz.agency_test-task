@@ -8,6 +8,8 @@ import heroBgAvif from '../assets/img/hero/Banner_photo.avif';
 import heroBgWebp from '../assets/img/hero/Banner_photo.jpg';
 import heroBgJpeg from '../assets/img/hero/Banner_photo.jpg';
 import infoBlockImg from '../assets/icons/InfoBlock.svg';
+import heroBgMobile from '../assets/img/hero/Banner_photo_mobile.jpg';
+import heroBgMobile2x from '../assets/img/hero/Banner_photo_mobile@2x.jpg';
 import BG from './../components/UI/BG/BG';
 import SignUpForm from '../components/SignUpForm/SignUpForm';
 
@@ -18,13 +20,19 @@ const IndexPage = () => {
 
       <BG color="light-gray">
         <Hero
-          images={{ avif: heroBgAvif, webp: heroBgWebp, jpeg: heroBgJpeg }}
+          images={{
+            avif: heroBgAvif,
+            webp: heroBgWebp,
+            jpeg: heroBgJpeg,
+            mobile560: heroBgMobile,
+            mobile2x560: heroBgMobile2x,
+          }}
           title="Test assignment for front-end developers"
           text="Front-end developers make sure the user sees and interacts with all the necessary elements to ensure conversion. Therefore, responsive design, programming languages and specific frameworks are the must-have skillsets to look for when assessing your front-end developers."
           btnText="Sign up"
         />
 
-        <section className="info-blocks" style={{ marginBottom: '190px' }}>
+        <section className="info-blocks">
           <div className="container">
             <InfoBlock
               linkImg={infoBlockImg}

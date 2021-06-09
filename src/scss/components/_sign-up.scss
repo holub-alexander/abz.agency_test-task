@@ -14,3 +14,9 @@
   max-width: 380px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 560px) {
+  .sign-up__title {
+    margin: 0 18px 11px;
+  }
+}

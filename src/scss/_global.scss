@@ -106,3 +106,21 @@ a {
     pointer-events: auto;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .container {
+    max-width: 936px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 736px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .container {
+    max-width: 360px;
+  }
+}
