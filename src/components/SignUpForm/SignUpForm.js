@@ -6,7 +6,7 @@ import Heading from '../UI/Typography/Heading';
 import Button from './../UI/Button/Button';
 import Font from './../UI/Typography/Font';
 import SelectPos from '../SelectPos/SelectPos';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   checkValueLength,
@@ -15,6 +15,7 @@ import {
 } from './validationForm';
 import FileUpload from '../UI/FileUpload/FileUpload';
 import { sendUser } from '../../redux/actions/sendUser';
+import Modal from './../Modal/Modal';
 
 const SignUpForm = ({ title, descr }) => {
   const [isFormValid, setIsFormValid] = React.useState(false);
@@ -27,12 +28,15 @@ const SignUpForm = ({ title, descr }) => {
   const [phone, setPhone] = React.useState('');
   const [radioChecked, setRadioChecked] = React.useState(1);
   const [file, setFile] = React.useState('');
+  const [modalOpen, setModalOpen] = React.useState(true);
 
+  const sendUserSuccess = useSelector(state => state.sendUserReducer.success);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (isValidName && isValidEmail && isValidPhone && isValidFile) {
       setIsFormValid(true);
+      setModalOpen(true);
     } else {
       setIsFormValid(false);
     }
@@ -139,6 +143,15 @@ const SignUpForm = ({ title, descr }) => {
           </div>
         </div>
       </div>
+      {sendUserSuccess ? (
+        <Modal
+          isOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          modalName="notification"
+          title="Congratulations"
+          descr="You have successfully passed the registration "
+        />
+      ) : null}
     </div>
   );
 };

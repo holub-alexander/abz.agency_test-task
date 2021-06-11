@@ -6,9 +6,10 @@ import {
 
 const initialState = {
   sendUser: null,
+  success: false,
 };
 
-const positions = (state = initialState, action) => {
+const sendUser = (state = initialState, action) => {
   switch (action.type) {
     case SEND_USER_START:
       return {
@@ -18,6 +19,7 @@ const positions = (state = initialState, action) => {
       return {
         ...state,
         sendUser: action.sendUser,
+        success: true,
       };
     case SEND_USER_ERROR:
       return {
@@ -29,4 +31,4 @@ const positions = (state = initialState, action) => {
   }
 };
 
-export default positions;
+export default sendUser;

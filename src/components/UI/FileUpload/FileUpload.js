@@ -15,15 +15,19 @@ const FileUpload = props => {
     const currentFile = event.target.files[0];
     let currentImage = true;
 
-    setFileName(currentFile.name);
+    setFileName(currentFile?.name || '');
 
-    if (currentFile.size > 5242880) {
+    if (fileName && currentFile?.size > 5242880) {
       errorMessages.push('Фотография должна быть размером не более 5 МБ');
       currentImage = false;
       setIsError(true);
     }
 
-    if (currentFile.type !== 'image/jpeg' && currentFile.type !== 'image/jpg') {
+    if (
+      fileName &&
+      currentFile?.type !== 'image/jpeg' &&
+      currentFile?.type !== 'image/jpg'
+    ) {
       errorMessages.push('Фотография должна быть в формате jpg / jpeg');
       currentImage = false;
       setIsError(true);
