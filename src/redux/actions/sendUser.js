@@ -32,7 +32,7 @@ const getToken = async () => {
 
     return response;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
@@ -49,25 +49,21 @@ export const sendUser = ({ name, email, phone, radioChecked: radio, file }) => {
 
       const token = await getToken();
 
-      await axios
-        .post('users', formData, {
+      const res =
+        token.data.token &&
+        (await axios.post('users', formData, {
           headers: {
             Token: token.data.token,
           },
-        })
-        .then(res => {
-          if (res.data.success) {
-            dispatch(sendUserSuccess({ ...res.data }));
-          } else {
-            dispatch(sendUserError({ ...res.data }));
-          }
-        })
-        .catch(err => {
-          dispatch(sendUserError(err));
-          console.log(err);
-        });
+        }));
+
+      if (res.data.success) {
+        dispatch(sendUserSuccess({ ...res.data }));
+      }
     } catch (err) {
-      console.log(err);
+      const errorObj = { ...err.response.data, status: err.response.status };
+
+      dispatch(sendUserError(errorObj));
     }
   };
 };

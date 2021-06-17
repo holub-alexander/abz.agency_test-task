@@ -10,6 +10,14 @@ const FileUpload = props => {
   const [isError, setIsError] = React.useState(false);
   const [errors, setError] = React.useState([]);
 
+  React.useEffect(() => {
+    const savedFileName = window.sessionStorage.getItem('file-name');
+
+    if (savedFileName) {
+      setFileName(savedFileName);
+    }
+  }, []);
+
   const fileInputHanlder = event => {
     const errorMessages = [];
     const currentFile = event.target.files[0];
@@ -44,6 +52,9 @@ const FileUpload = props => {
         } else {
           setFile(file);
           setIsValidFile(true);
+
+          window.sessionStorage.setItem('file-name', file.name);
+          window.sessionStorage.setItem('file-url', URL.createObjectURL(file));
         }
       });
     }

@@ -34,7 +34,9 @@ export const fetchPositions = () => {
 
       dispatch(fetchPositionsSuccess(response));
     } catch (err) {
-      dispatch(fetchPositionsError(err));
+      const errorObj = { ...err.response.data, status: err.response.status };
+
+      dispatch(fetchPositionsError(errorObj));
     }
   };
 };
