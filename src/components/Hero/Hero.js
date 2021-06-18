@@ -16,7 +16,7 @@ const Hero = ({ images, title, text, btnText = '' }) => {
         <Picture
           sources={[
             {
-              srcSet: `${images.mobile560}, ${images.mobile2x560} 2x`,
+              srcSet: `${images.mobile560}`,
               media: '(max-width: 560px)',
             },
             {

@@ -14,7 +14,7 @@
     font-family: $accent-font;
     line-height: 1.6em;
 
-    background-color: $bg-color-light-xl;
+    background-color: $bg-color-light-x;
     border: 1px solid #d0cfcf;
     border-radius: 4px;
     outline: none;
@@ -56,6 +56,10 @@
     transition: all 300ms;
 
     pointer-events: none;
+
+    span {
+      flex-shrink: 0;
+    }
   }
 
   .input-control__helper {

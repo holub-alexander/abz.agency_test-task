@@ -10,35 +10,39 @@ import Button from './../UI/Button/Button';
 import Font from './../UI/Typography/Font';
 import Preloader from '../UI/Preloader/Preloader';
 
-const buildCards = response => {
-  return response.data.users.map(card => {
-    const { id, name, email, position, photo, phone } = card;
-
-    return (
-      <Card
-        type="normal"
-        key={id}
-        name={name}
-        email={email}
-        photo={photo}
-        phone={phone}
-        position={position}
-      />
-    );
-  });
-};
-
 const OurUsers = ({ title, descr }) => {
   const [isLoading, setLoading] = React.useState(true);
-  const [cards, setCards] = React.useState(null);
-  const [pageNum, setPageNum] = React.useState(2);
-  const [totalPages, setTotalPages] = React.useState(1);
-  const windowSize = useWindowSize();
-  const [typeBlockCards, setTypeBlockCards] = React.useState([
-    'our-users__cards',
-  ]);
+  const [cards, setCards] = React.useState([]);
+  const [pageNum, setPageNum] = React.useState(0);
+  const [totalPages, setTotalPages] = React.useState(null);
+  const [error, setErrors] = React.useState(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [userData, setUserData] = React.useState(null);
 
-  const sendUserData = useSelector(state => state.sendUserReducer);
+  const windowSize = useWindowSize();
+  const sendUserData = useSelector(state => state.sendUserReducer.sendUser);
+
+  const buildCards = data => {
+    const res = data.map(card => {
+      const { id, name, email, position, photo, phone } = card;
+
+      return (
+        <Card
+          type="normal"
+          key={id}
+          name={name}
+          email={email}
+          photo={photo}
+          phone={phone}
+          position={position}
+        />
+      );
+    });
+
+    const newCards = [...cards, ...res];
+
+    setCards(newCards);
+  };
 
   React.useEffect(() => {
     let countCards = 9;
@@ -46,35 +50,42 @@ const OurUsers = ({ title, descr }) => {
     if (windowSize.width < 1024) countCards = 6;
     if (windowSize.width < 768) countCards = 3;
 
-    if (countCards === 9) setTypeBlockCards('our-users__cards--big');
-    if (countCards === 6) setTypeBlockCards('our-users__cards--medium');
-    if (countCards === 3) setTypeBlockCards('our-users__cards--small');
+    if (pageNum > 1) {
+      setIsOpen(true);
+    }
 
-    getCards(1, countCards)
+    if (userData && isOpen) {
+      countCards = 6;
+    }
+
+    getCards(pageNum === 0 ? 1 : pageNum, countCards)
       .then(res => {
         setLoading(res.loading);
-        setPageNum(1);
-        setTotalPages(res.response.data.total_pages);
-        setCards(buildCards(res.response));
+        setTotalPages(res.data.total_pages);
+        setErrors(null);
+        setUserData(null);
+
+        buildCards(res.data.users);
       })
-      .catch(err => console.log(err));
-  }, [sendUserData, windowSize.width]);
+      .catch(err => {
+        setLoading(err.errObj.loading);
+        setErrors(err.errObj.errObj);
+      });
+    // eslint-disable-next-line
+  }, [pageNum]);
+
+  React.useEffect(() => {
+    if (sendUserData) {
+      setPageNum(1);
+      setCards([]);
+      setUserData(sendUserData);
+    }
+  }, [sendUserData]);
 
   const showMoreClickHanlder = () => {
-    let countCards = 9;
-
-    if (windowSize.width < 1024) countCards = 6;
-    if (windowSize.width < 768) countCards = 3;
-
-    setLoading(true);
-
-    getCards(pageNum + 1, countCards)
-      .then(res => {
-        setLoading(res.loading);
-        setPageNum(pageNum + 1);
-        setCards(buildCards(res.response));
-      })
-      .catch(err => console.log(err));
+    if (navigator.onLine) {
+      setPageNum(pageNum + 1);
+    }
   };
 
   return (
@@ -89,11 +100,44 @@ const OurUsers = ({ title, descr }) => {
           </Heading>
         ) : null}
       </div>
-      <div className={`our-users__cards ${typeBlockCards}`}>
+      <div className={`our-users__cards`}>
+        {error ? (
+          <div className="our-users__errors-box">
+            <Font type="normal">
+              {error.message}
+
+              {error?.fails ? (
+                <ul>
+                  {error.fails.count ? (
+                    <li>
+                      Count:
+                      <ul>
+                        {error.fails.count.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </li>
+                  ) : null}
+                  {error.fails.page ? (
+                    <li>
+                      Page:
+                      <ul>
+                        {error.fails.page.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </li>
+                  ) : null}
+                </ul>
+              ) : null}
+            </Font>
+          </div>
+        ) : null}
+
         {isLoading ? <Preloader /> : cards}
       </div>
       <div className="our-users__btn">
-        {pageNum <= totalPages ? (
+        {pageNum < totalPages ? (
           <Button type="yellow" clickHandler={showMoreClickHanlder}>
             <Font type="normal">Show more</Font>
           </Button>

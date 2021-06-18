@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../UI/FormControls/Input';
 import Heading from '../UI/Typography/Heading';
 import Button from './../UI/Button/Button';
 import Font from './../UI/Typography/Font';
 import SelectPos from '../SelectPos/SelectPos';
-import { useDispatch, useSelector } from 'react-redux';
-
 import {
   checkValueLength,
   validationEmail,
@@ -23,29 +22,75 @@ const SignUpForm = ({ title, descr }) => {
   const [isValidEmail, setIsValidEmail] = React.useState(false);
   const [isValidPhone, setIsValidPhone] = React.useState(false);
   const [isValidFile, setIsValidFile] = React.useState(false);
+  const [formSendSuccess, setFormSendSuccess] = React.useState(false);
+  const [formError, setFormError] = React.useState(null);
+  const [isFormWorking, setIsFormWorking] = React.useState(true);
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [radioChecked, setRadioChecked] = React.useState(1);
   const [file, setFile] = React.useState('');
-  const [modalOpen, setModalOpen] = React.useState(true);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const errorBoxRef = React.useRef();
 
-  const sendUserSuccess = useSelector(state => state.sendUserReducer.success);
+  const sendUserSuccess = useSelector(state => state.sendUserReducer);
+  const sendUserError = useSelector(state => state.sendUserReducer.error);
   const dispatch = useDispatch();
+
+  const fillInputs = () => {
+    const savedName = window.sessionStorage.getItem('user-name') || '';
+    const savedEmail = window.sessionStorage.getItem('user-email') || '';
+    const savedPhone = window.sessionStorage.getItem('user-phone') || '';
+
+    if (savedName || savedEmail || savedPhone) {
+      setName(savedName);
+      validationInput('user-name', savedName, 2, 60);
+
+      setEmail(savedEmail);
+      validationInput('user-email', savedEmail, 2, 100);
+
+      setPhone(savedPhone);
+      validationInput('user-phone', savedPhone, 0, 13);
+    }
+  };
+
+  React.useEffect(() => {
+    fillInputs();
+    // eslint-disable-next-line
+  }, []);
 
   React.useEffect(() => {
     if (isValidName && isValidEmail && isValidPhone && isValidFile) {
       setIsFormValid(true);
-      setModalOpen(true);
     } else {
       setIsFormValid(false);
     }
   }, [isValidName, isValidEmail, isValidPhone, isValidFile]);
 
+  React.useEffect(() => {
+    if (sendUserError) {
+      setFormError(sendUserError);
+    }
+
+    if (sendUserSuccess.sendUser && sendUserSuccess.success) {
+      setFormSendSuccess(true);
+      setFormError(null);
+    }
+  }, [sendUserError, sendUserSuccess]);
+
+  React.useEffect(() => {
+    if (!isFormWorking) {
+      setIsFormValid(false);
+    }
+  }, [isFormWorking]);
+
   const formSubmitHandler = event => {
     event.preventDefault();
 
     if (isFormValid) {
+      setFormSendSuccess(false);
+      setFormError(null);
+      setModalOpen(true);
       dispatch(sendUser({ name, email, phone, radioChecked, file }));
     }
   };
@@ -56,16 +101,19 @@ const SignUpForm = ({ title, descr }) => {
 
     if (nameInput === 'user-name') {
       isValid = isCurrentLength;
+      window.sessionStorage.setItem('user-name', value);
       setIsValidName(isValid);
     }
 
     if (isCurrentLength && nameInput === 'user-email') {
       isValid = validationEmail(value);
+      window.sessionStorage.setItem('user-email', value);
       setIsValidEmail(isValid);
     }
 
     if (isCurrentLength && nameInput === 'user-phone') {
       isValid = validationPhone(value);
+      window.sessionStorage.setItem('user-phone', value);
       setIsValidPhone(isValid);
     }
 
@@ -84,6 +132,12 @@ const SignUpForm = ({ title, descr }) => {
           </Heading>
 
           <div className="sign-up__form-box">
+            {!isFormWorking ? (
+              <div className="sign-up__error-box active" ref={errorBoxRef}>
+                <Font type="normal">The form is not working at the moment</Font>
+              </div>
+            ) : null}
+
             <form className="sign-up-form" onSubmit={formSubmitHandler}>
               <div className="sign-up-form__input-group">
                 <Input
@@ -91,7 +145,11 @@ const SignUpForm = ({ title, descr }) => {
                   setValue={setName}
                   validation={validationInput}
                   placeholder="Your name"
-                  helperText="Длина поля ограничена"
+                  helperText={
+                    formError?.fails?.name?.join('. ') ||
+                    'Line length is limited'
+                  }
+                  isError={formError?.fails?.name?.length > 0}
                   minLength={2}
                   maxLength={60}
                   isRequired={true}
@@ -104,7 +162,11 @@ const SignUpForm = ({ title, descr }) => {
                   setValue={setEmail}
                   validation={validationInput}
                   placeholder="Email"
-                  helperText="Длина поля ограничена"
+                  helperText={
+                    formError?.fails?.email?.join('. ') ||
+                    'Line length is limited'
+                  }
+                  isError={formError?.fails?.email?.length > 0}
                   minLength={2}
                   maxLength={100}
                   isRequired={true}
@@ -117,17 +179,24 @@ const SignUpForm = ({ title, descr }) => {
                   setValue={setPhone}
                   validation={validationInput}
                   placeholder="Phone"
-                  helperText="Номер должен начинаться с кода +380"
+                  helperText={
+                    formError?.fails?.phone?.join('. ') ||
+                    'The number must start with +380'
+                  }
+                  isError={formError?.fails?.phone?.length > 0}
                   minLength={0}
                   maxLength={13}
                   isRequired={true}
                   name="user-phone"
+                  type="tel"
                 />
               </div>
               <div className="sign-up-form__select-pos">
                 <SelectPos
                   title="Select your position"
                   setRadioChecked={setRadioChecked}
+                  errors={formError?.fails?.position_id}
+                  setIsFormWorking={setIsFormWorking}
                 />
               </div>
               <FileUpload
@@ -143,7 +212,17 @@ const SignUpForm = ({ title, descr }) => {
           </div>
         </div>
       </div>
-      {sendUserSuccess ? (
+      {formError ? (
+        <Modal
+          isOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          modalName="error"
+          title="Errors"
+          descr={formError.message}
+        />
+      ) : null}
+
+      {formSendSuccess ? (
         <Modal
           isOpen={modalOpen}
           setModalOpen={setModalOpen}

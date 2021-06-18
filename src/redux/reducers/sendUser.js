@@ -19,12 +19,14 @@ const sendUser = (state = initialState, action) => {
       return {
         ...state,
         sendUser: action.sendUser,
+        error: null,
         success: true,
       };
     case SEND_USER_ERROR:
       return {
         ...state,
         error: action.error,
+        success: false,
       };
     default:
       return state;

@@ -1,8 +1,7 @@
 class ValidationError extends Error {
-  constructor(message = null, obj) {
+  constructor(errObj) {
     super();
-    this.message = message;
-    this.obj = obj;
+    this.errObj = errObj;
   }
 }
 
