@@ -73,6 +73,15 @@ const SignUpForm = ({ title, descr }) => {
     }
 
     if (sendUserSuccess.sendUser && sendUserSuccess.success) {
+      setName('');
+      setEmail('');
+      setPhone('');
+      setFile('');
+
+      window.sessionStorage.removeItem('user-name');
+      window.sessionStorage.removeItem('user-email');
+      window.sessionStorage.removeItem('user-phone');
+
       setFormSendSuccess(true);
       setFormError(null);
     }
