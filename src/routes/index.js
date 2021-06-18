@@ -1,6 +1,5 @@
 import React from 'react';
 
-const IndexContainer = React.lazy(() => import('../pages/Index'));
 const RelationshipsContainer = React.lazy(() =>
   import('../pages/Relationships')
 );
@@ -12,7 +11,7 @@ const routes = [
     title: 'About me',
     to: '/',
     mobile: false,
-    component: IndexContainer,
+    component: null,
   },
   {
     title: 'Relationships',
