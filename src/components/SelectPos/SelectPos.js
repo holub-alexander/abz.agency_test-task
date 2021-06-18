@@ -31,7 +31,10 @@ const SelectPos = props => {
 
   React.useEffect(() => {
     dispatch(fetchPositions());
+    // eslint-disable-next-line
+  }, []);
 
+  React.useEffect(() => {
     if (!positions.loading && !positions.error) {
       setPositionsBlock(createPositions(positions.results.positions));
     }

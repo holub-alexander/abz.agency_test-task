@@ -1,4 +1,5 @@
 import axios from '../../axios/axiosConfig';
+import ValidationError from './../../helpers/validationError';
 
 import {
   SEND_USER_START,
@@ -32,7 +33,17 @@ const getToken = async () => {
 
     return response;
   } catch (err) {
-    return err;
+    const errObj = {};
+
+    if (err.toJSON().message === 'Network Error') {
+      errObj['errObj'] = {
+        message: 'Network Error',
+      };
+    } else {
+      errObj['errObj'] = err.response.data;
+    }
+
+    return errObj;
   }
 };
 
@@ -49,8 +60,12 @@ export const sendUser = ({ name, email, phone, radioChecked: radio, file }) => {
 
       const token = await getToken();
 
+      if (token.errObj) {
+        throw new ValidationError(token.errObj);
+      }
+
       const res =
-        token.data.token &&
+        !token.errObj &&
         (await axios.post('users', formData, {
           headers: {
             Token: token.data.token,
@@ -61,9 +76,20 @@ export const sendUser = ({ name, email, phone, radioChecked: radio, file }) => {
         dispatch(sendUserSuccess({ ...res.data }));
       }
     } catch (err) {
-      const errorObj = { ...err.response.data, status: err.response.status };
+      let errObj = null;
 
-      dispatch(sendUserError(errorObj));
+      if (err.errObj?.message === 'Network Error') {
+        errObj = {
+          message: 'Network Error',
+        };
+      } else {
+        errObj = {
+          ...err.response.data,
+          status: err.response.status,
+        };
+      }
+
+      dispatch(sendUserError(errObj));
     }
   };
 };

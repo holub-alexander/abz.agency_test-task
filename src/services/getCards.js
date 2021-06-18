@@ -3,29 +3,35 @@ import ValidationError from './../helpers/validationError';
 
 const getCards = async (page = 1, count = 9) => {
   try {
-    const errors = {
-      success: false,
-      message: 'Validation failed',
-      fails: {
-        count: [],
-        page: [],
-      },
-    };
-
-    if (page < 1) errors.fails.page.push('The page must be at least 1.');
-    if (count % 1 !== 0)
-      errors.fails.count.push('The count must be an integer.');
-    if (errors.fails.count.length > 0 || errors.fails.page.length > 0)
-      throw new ValidationError(null, errors);
-
     const response = await axios.get(`users?page=${page}&count=${count}`);
 
+    if (response.data.users.length === 0) {
+      throw new ValidationError({ message: 'No data available' });
+    }
+
     return {
-      response,
+      data: response.data,
       loading: false,
     };
   } catch (err) {
-    console.log(err.obj);
+    const errObj = {};
+
+    if (err?.errObj?.message === 'No data available') {
+      errObj['errObj'] = {
+        message: 'No data available',
+      };
+    } else if (err.toJSON().message === 'Network Error') {
+      errObj['errObj'] = {
+        message: 'Network Error',
+      };
+    } else {
+      errObj['errObj'] = err.response.data;
+    }
+
+    throw new ValidationError({
+      ...errObj,
+      loading: false,
+    });
   }
 };
 

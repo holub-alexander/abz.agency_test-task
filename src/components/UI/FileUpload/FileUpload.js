@@ -53,8 +53,8 @@ const FileUpload = props => {
           setFile(file);
           setIsValidFile(true);
 
-          window.sessionStorage.setItem('file-name', file.name);
-          window.sessionStorage.setItem('file-url', URL.createObjectURL(file));
+          // window.sessionStorage.setItem('file-name', file.name);
+          // window.sessionStorage.setItem('file-url', URL.createObjectURL(file));
         }
       });
     }

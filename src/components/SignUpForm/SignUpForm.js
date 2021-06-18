@@ -22,6 +22,7 @@ const SignUpForm = ({ title, descr }) => {
   const [isValidEmail, setIsValidEmail] = React.useState(false);
   const [isValidPhone, setIsValidPhone] = React.useState(false);
   const [isValidFile, setIsValidFile] = React.useState(false);
+  const [formSendSuccess, setFormSendSuccess] = React.useState(false);
   const [formError, setFormError] = React.useState(null);
   const [isFormWorking, setIsFormWorking] = React.useState(true);
   const [name, setName] = React.useState('');
@@ -32,7 +33,7 @@ const SignUpForm = ({ title, descr }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const errorBoxRef = React.useRef();
 
-  const sendUserSuccess = useSelector(state => state.sendUserReducer.success);
+  const sendUserSuccess = useSelector(state => state.sendUserReducer);
   const sendUserError = useSelector(state => state.sendUserReducer.error);
   const dispatch = useDispatch();
 
@@ -40,19 +41,22 @@ const SignUpForm = ({ title, descr }) => {
     const savedName = window.sessionStorage.getItem('user-name') || '';
     const savedEmail = window.sessionStorage.getItem('user-email') || '';
     const savedPhone = window.sessionStorage.getItem('user-phone') || '';
-    const savedFile = window.sessionStorage.getItem('file-url') || '';
 
-    if (savedName || savedEmail || savedPhone || savedFile) {
+    if (savedName || savedEmail || savedPhone) {
       setName(savedName);
-      setEmail(savedEmail);
-      setPhone(savedPhone);
+      validationInput('user-name', savedName, 2, 60);
 
-      setFile(savedFile);
+      setEmail(savedEmail);
+      validationInput('user-email', savedEmail, 2, 100);
+
+      setPhone(savedPhone);
+      validationInput('user-phone', savedPhone, 0, 13);
     }
   };
 
   React.useEffect(() => {
     fillInputs();
+    // eslint-disable-next-line
   }, []);
 
   React.useEffect(() => {
@@ -67,7 +71,12 @@ const SignUpForm = ({ title, descr }) => {
     if (sendUserError) {
       setFormError(sendUserError);
     }
-  }, [sendUserError]);
+
+    if (sendUserSuccess.sendUser && sendUserSuccess.success) {
+      setFormSendSuccess(true);
+      setFormError(null);
+    }
+  }, [sendUserError, sendUserSuccess]);
 
   React.useEffect(() => {
     if (!isFormWorking) {
@@ -79,11 +88,10 @@ const SignUpForm = ({ title, descr }) => {
     event.preventDefault();
 
     if (isFormValid) {
+      setFormSendSuccess(false);
       setFormError(null);
       setModalOpen(true);
       dispatch(sendUser({ name, email, phone, radioChecked, file }));
-    } else {
-      setModalOpen(true);
     }
   };
 
@@ -214,7 +222,7 @@ const SignUpForm = ({ title, descr }) => {
         />
       ) : null}
 
-      {sendUserSuccess ? (
+      {formSendSuccess ? (
         <Modal
           isOpen={modalOpen}
           setModalOpen={setModalOpen}

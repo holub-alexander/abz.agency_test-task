@@ -1,4 +1,5 @@
 import axios from '../../axios/axiosConfig';
+import ValidationError from './../../helpers/validationError';
 
 import {
   FETCH_POSITIONS_START,
@@ -32,11 +33,30 @@ export const fetchPositions = () => {
     try {
       const response = await axios.get('positions');
 
+      if (response.data.positions.length === 0) {
+        throw new ValidationError({ message: 'No data available' });
+      }
+
       dispatch(fetchPositionsSuccess(response));
     } catch (err) {
-      const errorObj = { ...err.response.data, status: err.response.status };
+      let errObj = null;
 
-      dispatch(fetchPositionsError(errorObj));
+      if (err.errObj?.message === 'Network Error') {
+        errObj = {
+          message: 'Network Error',
+        };
+      } else if (err.errObj?.message === 'No data available') {
+        errObj = {
+          message: 'No data available',
+        };
+      } else {
+        errObj = {
+          ...err.response.data,
+          status: err.response.status,
+        };
+      }
+
+      dispatch(fetchPositionsError(errObj));
     }
   };
 };
