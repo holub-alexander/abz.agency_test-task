@@ -1,32 +1,36 @@
-import IndexPage from '../pages/Index';
-import RelationshipsPage from '../pages/Relationships';
-import RequirementsPage from '../pages/Requirements';
-import UsersPage from '../pages/Users';
+import React from 'react';
+
+const IndexContainer = React.lazy(() => import('../pages/Index'));
+const RelationshipsContainer = React.lazy(() =>
+  import('../pages/Relationships')
+);
+const RequirementsContainer = React.lazy(() => import('../pages/Requirements'));
+const UsersContainer = React.lazy(() => import('../pages/Users'));
 
 const routes = [
   {
     title: 'About me',
     to: '/',
     mobile: false,
-    component: IndexPage,
+    component: IndexContainer,
   },
   {
     title: 'Relationships',
     to: '/relationships',
     mobile: false,
-    component: RelationshipsPage,
+    component: RelationshipsContainer,
   },
   {
     title: 'Requirements',
     to: '/requirements',
     mobile: false,
-    component: RequirementsPage,
+    component: RequirementsContainer,
   },
   {
     title: 'Users',
     to: '/users',
     mobile: false,
-    component: UsersPage,
+    component: UsersContainer,
   },
   {
     title: 'Sign Up',

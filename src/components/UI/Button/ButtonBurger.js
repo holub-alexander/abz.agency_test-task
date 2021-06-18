@@ -6,7 +6,12 @@ import menuBtn from '../../../assets/icons/Menu.svg';
 
 const ButtonBurger = ({ menuClickHander }) => {
   return (
-    <button type="button" className="button-burger" onClick={menuClickHander}>
+    <button
+      type="button"
+      className="button-burger"
+      aria-label="button-burger"
+      onClick={menuClickHander}
+    >
       <ReactSVG src={menuBtn} />
     </button>
   );

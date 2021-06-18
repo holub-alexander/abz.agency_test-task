@@ -12,17 +12,6 @@
 }
 
 @font-face {
-  font-weight: 700;
-  font-family: 'Nunito';
-  font-style: normal;
-  font-display: swap;
-
-  src: local('Nunito Bold'), local('Nunito-Bold'),
-    url('../assets/fonts/Nunito-Bold.woff2') format('woff2'),
-    url('../assets/fonts/Nunito-Bold.woff') format('woff');
-}
-
-@font-face {
   font-family: 'Asap';
   src: local('Asap Regular'), local('Asap-Regular'),
     url('../assets/fonts/Asap-Regular.woff2') format('woff2'),

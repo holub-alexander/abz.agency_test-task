@@ -11,7 +11,7 @@ const InfoBlock = props => {
   return (
     <div className="info-block">
       <div className="info-block__img">
-        <img src={linkImg} alt={title} />
+        <img src={linkImg} alt={title} width="387" height="340" />
       </div>
 
       <div className="info-block__info-box">
